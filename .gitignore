@@ -1,0 +1,31 @@
+# Astro build
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+.cache/
+
+# Build outputs
+*.tsbuildinfo

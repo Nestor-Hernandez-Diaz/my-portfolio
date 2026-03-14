@@ -1,0 +1,19 @@
+{
+  "name": "nestor-portfolio",
+  "version": "1.0.0",
+  "description": "Nestor Portfolio 2026 - Clean Tech Luxury",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}

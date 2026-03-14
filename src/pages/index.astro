@@ -1,0 +1,132 @@
+---
+// src/pages/index.astro
+// Esta página renderiza el HTML completo de Stitch con soporte para dark mode
+
+import fs from 'fs';
+
+// Leer archivos HTML directamente
+const lightHtmlContent = fs.readFileSync('src/assets/stitch-light.html', 'utf-8');
+const darkHtmlContent = fs.readFileSync('src/assets/stitch-dark.html', 'utf-8');
+
+// Extraer body content
+function extractBodyContent(html) {
+  const bodyStart = html.indexOf('<body');
+  const bodyStartEnd = html.indexOf('>', bodyStart) + 1;
+  const bodyEnd = html.lastIndexOf('</body>');
+  return html.substring(bodyStartEnd, bodyEnd);
+}
+
+function extractHead(html) {
+  const headStart = html.indexOf('<head');
+  const headStartEnd = html.indexOf('>', headStart) + 1;
+  const headEnd = html.lastIndexOf('</head>');
+  return html.substring(headStartEnd, headEnd);
+}
+
+const lightBodyContent = extractBodyContent(lightHtmlContent);
+const darkBodyContent = extractBodyContent(darkHtmlContent);
+const headContent = extractHead(lightHtmlContent);
+
+// El HTML resultante tendrá ambos contenidos, y mostraremos el correcto con CSS
+const combinedHtml = `
+<div id="light-theme" class="hidden">
+  ${lightBodyContent}
+</div>
+<div id="dark-theme" class="hidden">
+  ${darkBodyContent}
+</div>
+`;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Nestor Portfolio - Clean Tech Luxury" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Nestor Portfolio 2026 - Clean Tech Luxury</title>
+
+    <!-- Incluir head de Stitch (Tailwind, fonts, etc) -->
+    <Fragment set:html={headContent} />
+
+    <!-- Script para tema oscuro/claro ANTES de renderizar -->
+    <script is:inline>
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      
+      // Aplicar clase dark a html ANTES de renderizar
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+
+    <style is:global>
+      /* Asegurar que el contenido correcto se muestre */
+      html:not(.dark) #light-theme {
+        display: block !important;
+      }
+      html:not(.dark) #dark-theme {
+        display: none !important;
+      }
+      html.dark #light-theme {
+        display: none !important;
+      }
+      html.dark #dark-theme {
+        display: block !important;
+      }
+
+      /* Transiciones suaves */
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Botón de toggle tema -->
+    <button 
+      id="theme-toggle" 
+      class="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 flex items-center justify-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+      aria-label="Toggle dark mode"
+    >
+      <span id="theme-toggle-icon">🌙</span>
+    </button>
+
+    <!-- Contenido dual: light y dark -->
+    <Fragment set:html={combinedHtml} />
+
+    <!-- Script para toggle de tema -->
+    <script is:inline>
+      const html = document.documentElement;
+      const toggleBtn = document.getElementById('theme-toggle');
+      const toggleIcon = document.getElementById('theme-toggle-icon');
+
+      function updateTheme(isDark) {
+        if (isDark) {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          if (toggleIcon) toggleIcon.textContent = '☀️';
+        } else {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          if (toggleIcon) toggleIcon.textContent = '🌙';
+        }
+      }
+
+      // Inicializar icono
+      const isDarkMode = html.classList.contains('dark');
+      if (toggleIcon) toggleIcon.textContent = isDarkMode ? '☀️' : '🌙';
+
+      // Click handler
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          const newDarkMode = !html.classList.contains('dark');
+          updateTheme(newDarkMode);
+        });
+      }
+    </script>
+  </body>
+</html>
