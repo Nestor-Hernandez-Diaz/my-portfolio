@@ -1,0 +1,15 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="relative z-10 border-t py-8 px-6"
+  style="border-color: var(--border)"
+>
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style="color: var(--text-muted)">
+    <p>© {year} Nestor Hernández Díaz. Todos los derechos reservados.</p>
+    <p class="text-xs">
+      Construido con <span class="font-semibold" style="color: var(--primary)">Astro</span> + <span class="font-semibold" style="color: var(--primary)">Tailwind</span>
+    </p>
+  </div>
+</footer>

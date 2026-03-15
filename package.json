@@ -1,0 +1,29 @@
+{
+  "name": "nestor-portfolio",
+  "version": "1.0.0",
+  "description": "Nestor Portfolio 2026 - Clean Tech Luxury",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.6.1",
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/tailwind": "^5.1.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "framer-motion": "^11.18.2",
+    "lucide-react": "^0.469.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.13.10",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2"
+  }
+}

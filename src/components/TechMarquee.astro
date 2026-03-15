@@ -1,0 +1,25 @@
+---
+const techs = [
+  'Java', 'JavaScript', 'TypeScript', 'Python', 'C++',
+  'HTML', 'CSS', 'React', 'Node.js', 'Spring Boot',
+  'PostgreSQL', 'MySQL', 'Astro', 'Tailwind CSS',
+];
+// Duplicamos para el loop infinito seamless
+const doubled = [...techs, ...techs];
+---
+
+<div
+  class="relative z-10 overflow-hidden py-5 border-y"
+  style="border-color: var(--border)"
+>
+  <div class="marquee-track">
+    {doubled.map((tech) => (
+      <span
+        class="mx-6 text-xs font-bold uppercase tracking-widest whitespace-nowrap select-none"
+        style="color: var(--text-muted)"
+      >
+        {tech}
+      </span>
+    ))}
+  </div>
+</div>

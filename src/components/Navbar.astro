@@ -1,0 +1,159 @@
+---
+import ThemeToggle from './ThemeToggle.tsx';
+
+const navLinks = [
+  { href: '#', label: 'Inicio' },
+  { href: '#about', label: 'Sobre mí' },
+  { href: '#projects', label: 'Proyectos' },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50">
+  <nav class="glass-panel mx-auto max-w-7xl px-6 py-4 rounded-xl mt-3
+              grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+
+    <!-- ── Izquierda: links de navegación (desktop) ── -->
+    <ul class="hidden md:flex items-center gap-8 text-sm font-medium"
+        style="color: var(--text-muted)">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class="hover:text-[var(--text)] transition-colors duration-200 py-1"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- ── Centro: Logo ── -->
+    <a
+      href="#"
+      class="text-2xl font-extrabold text-gradient tracking-tight justify-self-center"
+      aria-label="Inicio — Nestor Hernández Díaz"
+    >
+      NHD
+    </a>
+
+    <!-- ── Derecha: controles (desktop) ── -->
+    <div class="hidden md:flex items-center gap-3 justify-end">
+      <!-- Botón Contáctame -->
+      <a
+        href="#contact"
+        class="bg-[var(--primary)] hover:bg-[var(--primary-hover)]
+               text-white text-sm font-semibold px-5 py-2.5 rounded-full
+               transition-colors duration-200"
+      >
+        Contáctame
+      </a>
+
+      <!-- Theme toggle (sol/luna gris neutro) -->
+      <ThemeToggle client:load />
+
+      <!-- Language toggle — preparado para i18n -->
+      <button
+        id="lang-toggle"
+        aria-label="Cambiar idioma"
+        class="glass-panel px-3 py-1.5 rounded-full text-xs font-semibold
+               transition-colors duration-200 hover:text-[var(--text)]"
+        style="color: var(--text-muted)"
+        onclick="console.log('i18n: language toggle — pendiente de implementación')"
+      >
+        ES
+      </button>
+    </div>
+
+    <!-- ── Mobile: hamburger (solo visible en <md) ── -->
+    <div class="flex md:hidden items-center gap-3 justify-end">
+      <ThemeToggle client:load />
+      <button
+        id="mobile-menu-btn"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        class="glass-panel p-2 rounded-full"
+        style="color: var(--text-muted)"
+      >
+        <!-- Icono hamburger -->
+        <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <!-- Icono X (oculto por defecto) -->
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- ── Mobile dropdown menu ── -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden glass-panel mx-3 mt-1 rounded-xl px-6 py-4 space-y-4"
+  >
+    <ul class="space-y-3 text-sm font-medium" style="color: var(--text-muted)">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class="block py-1 hover:text-[var(--text)] transition-colors duration-200"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="flex items-center gap-3 pt-2 border-t" style="border-color: var(--border)">
+      <a
+        href="#contact"
+        class="flex-1 text-center bg-[var(--primary)] hover:bg-[var(--primary-hover)]
+               text-white text-sm font-semibold py-2.5 rounded-full transition-colors duration-200"
+      >
+        Contáctame
+      </a>
+      <button
+        aria-label="Cambiar idioma"
+        class="glass-panel px-3 py-2 rounded-full text-xs font-semibold"
+        style="color: var(--text-muted)"
+        onclick="console.log('i18n: language toggle — pendiente de implementación')"
+      >
+        ES
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    iconMenu?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  // Cerrar al hacer click en un link del menú mobile
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      iconMenu?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

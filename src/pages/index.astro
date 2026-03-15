@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import TechMarquee from '../components/TechMarquee.astro';
+import Expertise from '../components/Expertise.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import StarBackground from '../components/StarBackground.tsx';
+---
+
+<Layout>
+  <!-- Fondo animado de partículas (React island, no bloquea render) -->
+  <StarBackground client:idle />
+
+  <!-- Navbar fijo con toggle de tema -->
+  <Navbar />
+
+  <main>
+    <Hero />
+    <TechMarquee />
+    <Expertise />
+    <Projects />
+    <Contact />
+  </main>
+
+  <Footer />
+</Layout>

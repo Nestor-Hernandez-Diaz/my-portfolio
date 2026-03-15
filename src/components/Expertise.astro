@@ -1,0 +1,88 @@
+---
+const cards = [
+  {
+    icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
+    title: 'Lenguajes',
+    description: 'Bases sólidas en lenguajes de propósito general para desarrollo versátil y eficiente.',
+    // Cada tecnología en su propia línea — sin "/"
+    stack: ['Java', 'C++', 'JavaScript', 'TypeScript', 'Python'],
+  },
+  {
+    icon: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
+    title: 'Frontend',
+    description: 'Interfaces interactivas y responsivas, desde fundamentos web hasta frameworks modernos.',
+    stack: ['HTML', 'CSS', 'React', 'Alpine.js', 'Astro', 'Tailwind CSS'],
+  },
+  {
+    icon: `<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>`,
+    title: 'Backend & BD',
+    description: 'Arquitecturas robustas del lado servidor con gestión experta de bases de datos relacionales.',
+    stack: ['Node.js', 'Express', 'Spring Boot', 'MySQL', 'PostgreSQL', 'MariaDB', 'SQL Server'],
+  },
+];
+---
+
+<section id="about" class="py-24 px-6 relative z-10">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header de sección -->
+    <div class="mb-12">
+      <p class="text-sm font-semibold uppercase tracking-widest mb-2" style="color: var(--primary)">
+        Sobre mí
+      </p>
+      <h2 class="text-4xl font-bold" style="color: var(--text)">
+        Expertise & Stack Tecnológico
+      </h2>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid md:grid-cols-3 gap-6">
+      {cards.map((card) => (
+        <div class="glass-panel rounded-2xl p-6 hover-lift flex flex-col gap-5">
+
+          <!-- Icono + título -->
+          <div class="flex items-center gap-3">
+            <div
+              class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+              style="background: rgba(37,99,235,0.1)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18" height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--primary)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={card.icon}
+              />
+            </div>
+            <h3 class="font-bold text-lg" style="color: var(--text)">{card.title}</h3>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted)">
+            {card.description}
+          </p>
+
+          <!-- Stack: cada tecnología en línea propia con bullet -->
+          <ul class="flex flex-col gap-2.5">
+            {card.stack.map((item) => (
+              <li class="flex items-center gap-3 text-sm font-medium" style="color: var(--text)">
+                <!-- Bullet cuadrado con acento azul -->
+                <span
+                  class="w-1.5 h-1.5 rounded-sm flex-shrink-0"
+                  style="background: var(--primary); opacity: 0.8"
+                ></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
