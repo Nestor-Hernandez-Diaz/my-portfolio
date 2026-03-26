@@ -1,8 +1,9 @@
 ---
 import ThemeToggle from './ThemeToggle.tsx';
+import LanguageToggle from './LanguageToggle.tsx';
 
 const navLinks = [
-  { href: '#', label: 'Inicio' },
+  { href: '/', label: 'Inicio' },
   { href: '#about', label: 'Sobre mí' },
   { href: '#projects', label: 'Proyectos' },
 ];
@@ -29,7 +30,7 @@ const navLinks = [
 
     <!-- ── Centro: Logo ── -->
     <a
-      href="#"
+      href="/"
       class="text-2xl font-extrabold text-gradient tracking-tight justify-self-center"
       aria-label="Inicio — Nestor Hernández Díaz"
     >
@@ -51,17 +52,8 @@ const navLinks = [
       <!-- Theme toggle (sol/luna gris neutro) -->
       <ThemeToggle client:load />
 
-      <!-- Language toggle — preparado para i18n -->
-      <button
-        id="lang-toggle"
-        aria-label="Cambiar idioma"
-        class="glass-panel px-3 py-1.5 rounded-full text-xs font-semibold
-               transition-colors duration-200 hover:text-[var(--text)]"
-        style="color: var(--text-muted)"
-        onclick="console.log('i18n: language toggle — pendiente de implementación')"
-      >
-        ES
-      </button>
+      <!-- Language toggle -->
+      <LanguageToggle client:load />
     </div>
 
     <!-- ── Mobile: hamburger (solo visible en <md) ── -->
@@ -120,14 +112,7 @@ const navLinks = [
       >
         Contáctame
       </a>
-      <button
-        aria-label="Cambiar idioma"
-        class="glass-panel px-3 py-2 rounded-full text-xs font-semibold"
-        style="color: var(--text-muted)"
-        onclick="console.log('i18n: language toggle — pendiente de implementación')"
-      >
-        ES
-      </button>
+      <LanguageToggle client:load />
     </div>
   </div>
 </header>

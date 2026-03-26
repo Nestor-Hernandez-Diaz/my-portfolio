@@ -46,7 +46,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- ─── Anti-flash theme script (DEBE ir antes de cualquier render) ─── -->
     <script is:inline>
-      (function () {
+      // Función para aplicar el tema
+      function applyTheme() {
         const stored = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (stored === 'dark' || (!stored && prefersDark)) {
@@ -54,7 +55,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         } else {
           document.documentElement.classList.remove('dark');
         }
-      })();
+      }
+
+      // Aplicar en la carga inicial
+      applyTheme();
+
+      // Restaurar tema después de cada transición de Astro
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
 
     <ViewTransitions />
