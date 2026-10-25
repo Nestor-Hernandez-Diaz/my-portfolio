@@ -1,21 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 import { getLangFromUrl, useTranslations } from '../i18n/ui';
-// Misma foto que usa el CV 2026
+// Foto original recortada a 4:5 (1200×1500); Astro genera versiones WebP más livianas
 import profilePhoto from '../assets/profile.jpg';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const facts = [
-  { value: t('hero.fact1Value'), label: t('hero.fact1Label') },
-  { value: t('hero.fact2Value'), label: t('hero.fact2Label') },
-  { value: t('hero.fact3Value'), label: t('hero.fact3Label') },
-];
 ---
 
-<!-- Hero "Retrato protagonista": texto a la izquierda, foto grande a la derecha -->
-<section class="flex items-center pt-28 pb-10 px-6 relative z-10" style="min-height: 90vh">
+<!-- Hero "Retrato protagonista": texto a la izquierda, foto grande a la derecha.
+     Alto = pantalla menos la cinta de tecnologías, para que la cinta se vea sin hacer scroll -->
+<section class="flex items-center pt-24 pb-8 px-6 relative z-10" style="min-height: calc(100svh - 4rem)">
   <div class="max-w-7xl mx-auto w-full grid md:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
 
     <!-- Left: Text Content -->
@@ -69,31 +64,23 @@ const facts = [
           {t('hero.ctaCv')}
         </a>
       </div>
-
-      <!-- Datos clave -->
-      <dl class="grid grid-cols-3 gap-4 max-w-xl pt-6 border-t" style="border-color: var(--border)">
-        {facts.map((fact) => (
-          <div class="space-y-1">
-            <dt class="text-xl md:text-2xl font-bold" style="color: var(--text)">{fact.value}</dt>
-            <dd class="text-xs md:text-sm" style="color: var(--text-muted)">{fact.label}</dd>
-          </div>
-        ))}
-      </dl>
     </div>
 
-    <!-- Right: foto protagonista con etiquetas flotantes -->
-    <div class="relative w-full max-w-sm md:max-w-none mx-auto">
+    <!-- Right: foto protagonista con etiquetas flotantes; su alto se limita para no empujar la cinta -->
+    <div class="relative w-full max-w-sm md:max-w-none md:w-auto md:h-[min(64svh,600px)] aspect-[4/5] mx-auto">
       <div
-        class="relative aspect-[4/5] rounded-3xl overflow-hidden"
+        class="relative w-full h-full rounded-3xl overflow-hidden"
         style="box-shadow: 0 0 0 1px rgba(122,162,255,0.35), 0 30px 80px -20px rgba(37,99,235,0.45)"
       >
         <Image
           src={profilePhoto}
           alt={t('hero.photoAlt')}
-          width={460}
-          height={460}
-          class="w-full h-full object-cover object-top"
+          widths={[480, 720, 960, 1200]}
+          sizes="(min-width: 768px) 480px, 90vw"
+          quality={82}
+          class="w-full h-full object-cover"
           loading="eager"
+          fetchpriority="high"
         />
       </div>
 
@@ -104,7 +91,8 @@ const facts = [
         <p class="text-sm font-semibold leading-snug" style="color: var(--text)">{t('hero.chipEdu')}</p>
       </div>
 
-      <div class="glass-panel absolute right-3 top-4 lg:-right-6 lg:top-8 rounded-2xl px-4 py-3 max-w-[13rem]">
+      <!-- En celular va abajo, sobre la camisa, para no tapar la cara -->
+      <div class="glass-panel absolute left-3 bottom-[5.5rem] md:left-auto md:bottom-auto md:right-3 md:top-4 lg:-right-6 lg:top-8 rounded-2xl px-4 py-3 max-w-[13rem]">
         <p class="text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--primary)">
           {t('hero.chipNowLabel')}
         </p>
