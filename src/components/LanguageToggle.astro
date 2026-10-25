@@ -1,0 +1,37 @@
+---
+import { getLangFromUrl, useTranslations, homePath } from '../i18n/ui';
+
+// Enlace a la misma página en el otro idioma ("/" ↔ "/en/")
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const target = lang === 'es' ? 'en' : 'es';
+---
+
+<a
+  href={homePath(target)}
+  hreflang={target}
+  data-lang-toggle
+  aria-label={t('lang.switchLabel')}
+  class="glass-panel px-3 py-1.5 rounded-full text-xs font-semibold
+         transition-colors duration-200 hover:text-[var(--text)]"
+  style="color: var(--text-muted)"
+>
+  {lang.toUpperCase()}
+</a>
+
+<script>
+  // Conserva la posición de scroll al cambiar de idioma
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach((link) => {
+      link.addEventListener('click', () => {
+        sessionStorage.setItem('lang-scroll', String(window.scrollY));
+      });
+    });
+
+    const y = sessionStorage.getItem('lang-scroll');
+    if (y !== null) {
+      sessionStorage.removeItem('lang-scroll');
+      window.scrollTo({ top: Number(y), behavior: 'instant' });
+    }
+  });
+</script>

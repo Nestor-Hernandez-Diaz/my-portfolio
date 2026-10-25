@@ -1,34 +1,45 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
+import { getLangFromUrl, useTranslations, homePath, languages, type Lang } from '../i18n/ui';
 
 interface Props {
   title?: string;
   description?: string;
 }
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const {
-  title = 'Nestor Hernández Díaz — Full Stack Developer',
-  description = 'Portafolio profesional de Nestor Hernández Díaz. Estudiante de Ingeniería de Sistemas especializado en desarrollo full stack y experiencias digitales de alto impacto.',
+  title = t('meta.title'),
+  description = t('meta.description'),
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
+  lang: l,
+  href: new URL(homePath(l), Astro.site).href,
+}));
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content="Nestor Hernández Díaz" />
     <link rel="canonical" href={canonicalURL} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
 
     <!-- OG -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_PE' : 'en_US'} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

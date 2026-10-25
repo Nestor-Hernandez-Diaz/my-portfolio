@@ -1,14 +1,37 @@
 ---
+import { getLangFromUrl, useTranslations, type Localized } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+interface Project {
+  category: Localized;
+  year: string;
+  status?: Localized;
+  title: string;
+  subtitle?: Localized;
+  description: Localized;
+  tags: string[];
+  site?: string;
+  repo?: string;
+  accent: string;
+  bgFrom: string;
+  bgTo: string;
+  icon: string;
+}
+
 // site y repo son opcionales: los repos privados solo enlazan al sitio publicado
-const projects = [
+const projects: Project[] = [
   {
-    category: 'IoT · Energía solar',
+    category: { es: 'IoT · Energía solar', en: 'IoT · Solar power' },
     year: '2026',
-    status: 'En desarrollo',
+    status: { es: 'En desarrollo', en: 'In progress' },
     title: 'Hidroponía FISI',
-    description:
-      'Propuesta ganadora del Concurso de Hidroponía Sostenible con IoT de la FISI-UNSM, hoy en implementación. Invernadero NFT con sensores en ESP32, energía solar y dashboard de monitoreo. Diseño 3D y planos en Blender, más cotizaciones; se presenta en diciembre de 2026.',
-    tags: ['ESP32', 'IoT', 'Energía solar', 'Dashboard', 'Blender'],
+    description: {
+      es: 'Propuesta ganadora del Concurso de Hidroponía Sostenible con IoT de la FISI-UNSM, hoy en implementación. Invernadero NFT con sensores en ESP32, energía solar y dashboard de monitoreo. Diseño 3D y planos en Blender, más cotizaciones; se presenta en diciembre de 2026.',
+      en: 'Winning proposal of the FISI-UNSM Sustainable Hydroponics with IoT Contest, now being built. An NFT greenhouse with ESP32 sensors, solar power and a monitoring dashboard. 3D design and plans in Blender, plus cost quotes; it will be presented in December 2026.',
+    },
+    tags: ['ESP32', 'IoT', lang === 'es' ? 'Energía solar' : 'Solar power', 'Dashboard', 'Blender'],
     site: 'https://hidroponia-fisi.vercel.app',
     accent: '#2563EB',
     bgFrom: '#0f172a',
@@ -16,12 +39,14 @@ const projects = [
     icon: `<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>`,
   },
   {
-    category: 'IA · RAG',
+    category: { es: 'IA · RAG', en: 'AI · RAG' },
     year: '2026',
     title: 'Fisibot',
-    subtitle: 'Asistente virtual de la FISI-UNSM',
-    description:
-      'Asistente con avatar 3D que responde por texto y voz consultas sobre admisión, carreras, trámites y ubicaciones del campus. Las respuestas salen de documentos oficiales mediante RAG (búsqueda híbrida y modelo de lenguaje) y citan su fuente. Desplegado y en uso.',
+    subtitle: { es: 'Asistente virtual de la FISI-UNSM', en: 'FISI-UNSM virtual assistant' },
+    description: {
+      es: 'Asistente con avatar 3D que responde por texto y voz consultas sobre admisión, carreras, trámites y ubicaciones del campus. Las respuestas salen de documentos oficiales mediante RAG (búsqueda híbrida y modelo de lenguaje) y citan su fuente. Desplegado y en uso.',
+      en: 'Assistant with a 3D avatar that answers, by text and voice, questions about admissions, degree programs, procedures and campus locations. Answers come from official documents through RAG (hybrid search and a language model) and cite their source. Deployed and in use.',
+    },
     tags: ['Node.js', 'Vite', 'Three.js', 'RAG', 'Gemini', 'Vercel', 'Cloudflare Tunnel'],
     site: 'https://fisibot.me',
     accent: '#2563EB',
@@ -30,12 +55,14 @@ const projects = [
     icon: `<path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>`,
   },
   {
-    category: 'ERP · SaaS',
+    category: { es: 'ERP · SaaS', en: 'ERP · SaaS' },
     year: '2026',
     title: 'New Hype',
-    subtitle: 'ERP SaaS multi-tenant',
-    description:
-      'ERP para tiendas de ropa: ventas y caja, compras, inventario con kárdex, reportes y auditoría, panel de superadministración y tienda pública por tenant. Autenticación JWT y pruebas con Vitest y Playwright. Equipo de 5 colaboradores; publicado con DOI 10.5281/zenodo.21895543.',
+    subtitle: { es: 'ERP SaaS multi-tenant', en: 'Multi-tenant SaaS ERP' },
+    description: {
+      es: 'ERP para tiendas de ropa: ventas y caja, compras, inventario con kárdex, reportes y auditoría, panel de superadministración y tienda pública por tenant. Autenticación JWT y pruebas con Vitest y Playwright. Equipo de 5 colaboradores; publicado con DOI 10.5281/zenodo.21895543.',
+      en: 'ERP for clothing stores: sales and cash register, purchasing, inventory with stock ledger, reports and auditing, a super-admin panel and a public storefront per tenant. JWT authentication and tests with Vitest and Playwright. Team of 5 contributors; published with DOI 10.5281/zenodo.21895543.',
+    },
     tags: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS', 'Spring Boot', 'Java 17', 'MySQL'],
     repo: 'https://github.com/Nestor-Hernandez-Diaz/New-Hype-Project',
     accent: '#2563EB',
@@ -44,12 +71,14 @@ const projects = [
     icon: `<path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>`,
   },
   {
-    category: 'Frontend · Web',
+    category: { es: 'Frontend · Web', en: 'Frontend · Web' },
     year: '2025',
     title: 'GOATs del Fútbol',
-    subtitle: 'Enciclopedia web interactiva',
-    description:
-      'Enciclopedia sobre Messi, Cristiano Ronaldo y Neymar con buscador y filtros por país y posición, fichas de jugador, modo oscuro y registro de usuarios.',
+    subtitle: { es: 'Enciclopedia web interactiva', en: 'Interactive web encyclopedia' },
+    description: {
+      es: 'Enciclopedia sobre Messi, Cristiano Ronaldo y Neymar con buscador y filtros por país y posición, fichas de jugador, modo oscuro y registro de usuarios.',
+      en: 'Encyclopedia about Messi, Cristiano Ronaldo and Neymar with search and filters by country and position, player profiles, dark mode and user sign-up.',
+    },
     tags: ['HTML5', 'Tailwind CSS', 'Alpine.js', 'JavaScript', 'Vercel'],
     site: 'https://goats-del-futbol.vercel.app',
     repo: 'https://github.com/Nestor-Hernandez-Diaz/goats-del-futbol',
@@ -68,10 +97,10 @@ const projects = [
     <div class="flex items-end justify-between mb-12">
       <div>
         <p class="text-sm font-semibold uppercase tracking-widest mb-2" style="color: var(--primary)">
-          Proyectos
+          {t('projects.eyebrow')}
         </p>
         <h2 class="text-4xl font-bold" style="color: var(--text)">
-          Ingeniería & Diseño
+          {t('projects.title')}
         </h2>
       </div>
       <a
@@ -81,7 +110,7 @@ const projects = [
         class="hidden md:inline-flex items-center gap-1 text-sm font-semibold transition-colors"
         style="color: var(--primary)"
       >
-        Ver todos los proyectos
+        {t('projects.viewAll')}
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -127,7 +156,7 @@ const projects = [
                 style={`background: rgba(0,0,0,0.4); color: ${project.accent};
                         border: 1px solid ${project.accent}40`}
               >
-                {project.category}
+                {project.category[lang]}
               </span>
               {project.status && (
                 <span
@@ -137,7 +166,7 @@ const projects = [
                          border: 1px solid rgba(226,232,240,0.25)"
                 >
                   <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background: #fbbf24"></span>
-                  {project.status}
+                  {project.status[lang]}
                 </span>
               )}
             </div>
@@ -154,7 +183,7 @@ const projects = [
                 </h3>
                 {project.subtitle && (
                   <p class="text-xs font-medium mt-0.5" style="color: var(--primary)">
-                    {project.subtitle}
+                    {project.subtitle[lang]}
                   </p>
                 )}
               </div>
@@ -168,7 +197,7 @@ const projects = [
 
             <!-- Descripción -->
             <p class="text-xs leading-relaxed flex-1" style="color: var(--text-muted)">
-              {project.description}
+              {project.description[lang]}
             </p>
 
             <!-- Tags -->
@@ -202,7 +231,7 @@ const projects = [
                 <path d="M2 12h20"/>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
-              Ver sitio
+              {t('projects.site')}
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -230,7 +259,7 @@ const projects = [
                          a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7
                          A3.37 3.37 0 0 0 9 18.13V22"/>
               </svg>
-              Ver repositorio
+              {t('projects.repo')}
               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11"
                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

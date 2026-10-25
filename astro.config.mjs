@@ -4,7 +4,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://nestor-portfolio.vercel.app',
+  site: 'https://nestor-hernandez-diaz.vercel.app',
   output: 'static',
   integrations: [
     react(),

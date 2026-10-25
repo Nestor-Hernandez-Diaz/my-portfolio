@@ -1,13 +1,22 @@
 ---
 import { Image } from 'astro:assets';
-// TODO: Reemplazar profile.svg con tu foto real (hombre, formato cuadrado, mínimo 800x800px)
-// Pasos: 1) Copia tu foto a src/assets/profile.jpg  2) Cambia el import a profile.jpg
-import profilePlaceholder from '../assets/profile.jpg';
+import { getLangFromUrl, useTranslations } from '../i18n/ui';
+// Misma foto que usa el CV 2026
+import profilePhoto from '../assets/profile.jpg';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const facts = [
+  { value: t('hero.fact1Value'), label: t('hero.fact1Label') },
+  { value: t('hero.fact2Value'), label: t('hero.fact2Label') },
+  { value: t('hero.fact3Value'), label: t('hero.fact3Label') },
+];
 ---
 
-<!-- Hero: min-h reducido a ~90vh para que el TechMarquee sea visible sin scroll -->
-<section class="flex items-center pt-24 pb-6 px-6 relative z-10" style="min-height: 90vh">
-  <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+<!-- Hero "Retrato protagonista": texto a la izquierda, foto grande a la derecha -->
+<section class="flex items-center pt-28 pb-10 px-6 relative z-10" style="min-height: 90vh">
+  <div class="max-w-7xl mx-auto w-full grid md:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
 
     <!-- Left: Text Content -->
     <div class="space-y-6">
@@ -18,29 +27,27 @@ import profilePlaceholder from '../assets/profile.jpg';
                text-sm font-medium"
         style="color: var(--text-muted)"
       >
-        <!-- Punto azul (#2563EB) en lugar de verde -->
         <span
           class="w-2 h-2 rounded-full animate-pulse flex-shrink-0"
           style="background-color: var(--primary)"
         ></span>
-        Disponible para proyectos — 2026
+        {t('hero.badge')}
       </div>
 
       <!-- Heading principal -->
-      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-gradient">
-        Nestor<br />Hernández<br />Díaz
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-gradient">
+        Nestor<br />Hernández Díaz
       </h1>
 
-      <!-- Bio profesional -->
-      <p class="text-lg max-w-md leading-relaxed" style="color: var(--text-muted)">
-        Ingeniero de Sistemas en formación con foco en desarrollo full stack de alto rendimiento.
-        Creo soluciones digitales que combinan arquitectura sólida con experiencias de usuario premium.
+      <!-- Resumen del CV -->
+      <p class="text-lg max-w-xl leading-relaxed" style="color: var(--text-muted)">
+        {t('hero.bio')}
       </p>
 
       <!-- CTAs -->
       <div class="flex flex-wrap gap-4 pt-2">
         <a href="#projects" class="btn-primary">
-          Ver Proyectos
+          {t('hero.ctaProjects')}
         </a>
 
         <!-- CV download funcional — el archivo está en public/cv-nestor.pdf -->
@@ -48,7 +55,7 @@ import profilePlaceholder from '../assets/profile.jpg';
           href="/cv-nestor.pdf"
           download="cv-nestor-hernandez-diaz.pdf"
           class="btn-glass"
-          aria-label="Descargar CV de Nestor Hernández Díaz"
+          aria-label={t('hero.cvLabel')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -59,40 +66,49 @@ import profilePlaceholder from '../assets/profile.jpg';
             <polyline points="7 10 12 15 17 10"/>
             <line x1="12" y1="15" x2="12" y2="3"/>
           </svg>
-          Descargar CV
+          {t('hero.ctaCv')}
         </a>
       </div>
+
+      <!-- Datos clave -->
+      <dl class="grid grid-cols-3 gap-4 max-w-xl pt-6 border-t" style="border-color: var(--border)">
+        {facts.map((fact) => (
+          <div class="space-y-1">
+            <dt class="text-xl md:text-2xl font-bold" style="color: var(--text)">{fact.value}</dt>
+            <dd class="text-xs md:text-sm" style="color: var(--text-muted)">{fact.label}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
 
-    <!-- Right: Profile Card -->
-    <div class="flex justify-center">
-      <div class="glass-panel rounded-2xl p-6 hover-lift space-y-4 max-w-xs w-full">
-        <!--
-          TODO: Reemplazar profile.svg con tu foto real.
-          Debe ser un hombre, formato cuadrado, mínimo 800x800px, fondo neutro o profesional.
-          Ruta: src/assets/profile.jpg (cambiar import arriba también)
-        -->
+    <!-- Right: foto protagonista con etiquetas flotantes -->
+    <div class="relative w-full max-w-sm md:max-w-none mx-auto">
+      <div
+        class="relative aspect-[4/5] rounded-3xl overflow-hidden"
+        style="box-shadow: 0 0 0 1px rgba(122,162,255,0.35), 0 30px 80px -20px rgba(37,99,235,0.45)"
+      >
         <Image
-          src={profilePlaceholder}
-          alt="Nestor Hernández Díaz — Full Stack Developer"
-          width={400}
-          height={400}
-          class="w-full rounded-xl object-cover aspect-square"
+          src={profilePhoto}
+          alt={t('hero.photoAlt')}
+          width={460}
+          height={460}
+          class="w-full h-full object-cover object-top"
           loading="eager"
         />
-        <div class="flex items-center gap-2 text-sm" style="color: var(--text-muted)">
-          <svg
-            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          >
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
-          </svg>
-          <span>Especialización</span>
-        </div>
-        <p class="font-semibold" style="color: var(--text)">Full Stack Developer</p>
-        <p class="text-sm" style="color: var(--text-muted)">Ingeniería de Sistemas e Informática</p>
+      </div>
+
+      <div class="glass-panel absolute left-3 bottom-4 lg:-left-8 lg:bottom-8 rounded-2xl px-4 py-3 max-w-[15rem]">
+        <p class="text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--primary)">
+          {t('hero.chipEduLabel')}
+        </p>
+        <p class="text-sm font-semibold leading-snug" style="color: var(--text)">{t('hero.chipEdu')}</p>
+      </div>
+
+      <div class="glass-panel absolute right-3 top-4 lg:-right-6 lg:top-8 rounded-2xl px-4 py-3 max-w-[13rem]">
+        <p class="text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--primary)">
+          {t('hero.chipNowLabel')}
+        </p>
+        <p class="text-sm font-semibold leading-snug" style="color: var(--text)">{t('hero.chipNow')}</p>
       </div>
     </div>
 

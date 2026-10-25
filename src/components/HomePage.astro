@@ -1,0 +1,31 @@
+---
+// Cuerpo de la página de inicio, compartido por "/" (es) y "/en/" (en).
+// Cada componente lee el idioma desde la URL.
+import Layout from '../layouts/Layout.astro';
+import Navbar from './Navbar.astro';
+import Hero from './Hero.astro';
+import TechMarquee from './TechMarquee.astro';
+import Expertise from './Expertise.astro';
+import Projects from './Projects.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import StarBackground from './StarBackground.tsx';
+---
+
+<Layout>
+  <!-- Fondo animado de partículas (React island, no bloquea render) -->
+  <StarBackground client:idle transition:persist />
+
+  <!-- Navbar fijo con toggle de tema -->
+  <Navbar />
+
+  <main>
+    <Hero />
+    <TechMarquee />
+    <Expertise />
+    <Projects />
+    <Contact />
+  </main>
+
+  <Footer />
+</Layout>

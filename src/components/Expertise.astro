@@ -1,28 +1,45 @@
 ---
-const cards = [
+import { getLangFromUrl, useTranslations, type Localized } from '../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const cards: { icon: string; title: Localized; description: Localized; stack: string[] }[] = [
   {
     icon: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
-    title: 'Lenguajes',
-    description: 'Bases sólidas en lenguajes de propósito general para desarrollo versátil y eficiente.',
+    title: { es: 'Lenguajes', en: 'Languages' },
+    description: {
+      es: 'Bases sólidas en lenguajes de propósito general para desarrollo versátil y eficiente.',
+      en: 'Solid foundations in general-purpose languages for versatile, efficient development.',
+    },
     // Cada tecnología en su propia línea — sin "/"
     stack: ['Java', 'C++', 'JavaScript', 'TypeScript', 'Python'],
   },
   {
     icon: `<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>`,
-    title: 'Frontend',
-    description: 'Interfaces interactivas y responsivas, desde fundamentos web hasta frameworks modernos.',
+    title: { es: 'Frontend', en: 'Frontend' },
+    description: {
+      es: 'Interfaces interactivas y responsivas, desde fundamentos web hasta frameworks modernos.',
+      en: 'Interactive, responsive interfaces, from web fundamentals to modern frameworks.',
+    },
     stack: ['HTML', 'CSS', 'React', 'Alpine.js', 'Astro', 'Tailwind CSS', 'Three.js'],
   },
   {
     icon: `<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>`,
-    title: 'Backend & BD',
-    description: 'Arquitecturas robustas del lado servidor con gestión experta de bases de datos relacionales.',
+    title: { es: 'Backend & BD', en: 'Backend & DB' },
+    description: {
+      es: 'Arquitecturas robustas del lado servidor con gestión experta de bases de datos relacionales.',
+      en: 'Robust server-side architectures backed by well-managed relational databases.',
+    },
     stack: ['Node.js', 'Express', 'Spring Boot', 'MySQL', 'PostgreSQL', 'MariaDB', 'SQL Server', 'SQLite'],
   },
   {
     icon: `<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>`,
-    title: 'IoT, 3D & Datos',
-    description: 'Prototipos con microcontroladores y sensores, modelado 3D y visualización de datos.',
+    title: { es: 'IoT, 3D & Datos', en: 'IoT, 3D & Data' },
+    description: {
+      es: 'Prototipos con microcontroladores y sensores, modelado 3D y visualización de datos.',
+      en: 'Microcontroller and sensor prototypes, 3D modeling and data visualization.',
+    },
     stack: ['ESP32', 'Blender', 'Power BI'],
   },
 ];
@@ -34,10 +51,10 @@ const cards = [
     <!-- Header de sección -->
     <div class="mb-12">
       <p class="text-sm font-semibold uppercase tracking-widest mb-2" style="color: var(--primary)">
-        Sobre mí
+        {t('about.eyebrow')}
       </p>
       <h2 class="text-4xl font-bold" style="color: var(--text)">
-        Expertise & Stack Tecnológico
+        {t('about.title')}
       </h2>
     </div>
 
@@ -64,12 +81,12 @@ const cards = [
                 set:html={card.icon}
               />
             </div>
-            <h3 class="font-bold text-lg" style="color: var(--text)">{card.title}</h3>
+            <h3 class="font-bold text-lg" style="color: var(--text)">{card.title[lang]}</h3>
           </div>
 
           <!-- Descripción -->
           <p class="text-sm leading-relaxed" style="color: var(--text-muted)">
-            {card.description}
+            {card.description[lang]}
           </p>
 
           <!-- Stack: cada tecnología en línea propia con bullet -->
