@@ -66,7 +66,7 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <!-- Right: foto protagonista con etiquetas flotantes; su alto se limita para no empujar la cinta -->
+    <!-- Right: foto protagonista con etiqueta flotante; su alto se limita para no empujar la cinta -->
     <div class="relative w-full max-w-sm md:max-w-none md:w-auto md:h-[min(64svh,600px)] aspect-[4/5] mx-auto">
       <div
         class="relative w-full h-full rounded-3xl overflow-hidden"
@@ -89,14 +89,6 @@ const t = useTranslations(lang);
           {t('hero.chipEduLabel')}
         </p>
         <p class="text-sm font-semibold leading-snug" style="color: var(--text)">{t('hero.chipEdu')}</p>
-      </div>
-
-      <!-- En celular va abajo, sobre la camisa, para no tapar la cara -->
-      <div class="glass-panel absolute left-3 bottom-[5.5rem] md:left-auto md:bottom-auto md:right-3 md:top-4 lg:-right-6 lg:top-8 rounded-2xl px-4 py-3 max-w-[13rem]">
-        <p class="text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--primary)">
-          {t('hero.chipNowLabel')}
-        </p>
-        <p class="text-sm font-semibold leading-snug" style="color: var(--text)">{t('hero.chipNow')}</p>
       </div>
     </div>
 

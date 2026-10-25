@@ -32,7 +32,6 @@ const projects: Project[] = [
       en: 'Winning proposal of the FISI-UNSM Sustainable Hydroponics with IoT Contest, now being built. An NFT greenhouse with ESP32 sensors, solar power and a monitoring dashboard. 3D design and plans in Blender, plus cost quotes; it will be presented in December 2026.',
     },
     tags: ['ESP32', 'IoT', lang === 'es' ? 'Energía solar' : 'Solar power', 'Dashboard', 'Blender'],
-    site: 'https://hidroponia-fisi.vercel.app',
     accent: '#2563EB',
     bgFrom: '#0f172a',
     bgTo: '#1e3a5f',
@@ -148,16 +147,9 @@ const projects: Project[] = [
                      group-hover:opacity-30 transition-opacity duration-300"
               set:html={project.icon}
             />
-            <!-- Badges de categoría y estado superpuestos -->
-            <div class="relative z-10 flex flex-wrap items-center gap-2">
-              <span
-                class="text-xs font-bold uppercase tracking-widest
-                       px-2.5 py-1 rounded-full"
-                style={`background: rgba(0,0,0,0.4); color: ${project.accent};
-                        border: 1px solid ${project.accent}40`}
-              >
-                {project.category[lang]}
-              </span>
+            <!-- Badges superpuestos: el estado va arriba para que la categoría quede
+                 a la misma altura en todas las tarjetas -->
+            <div class="relative z-10 flex flex-col items-start gap-2">
               {project.status && (
                 <span
                   class="inline-flex items-center gap-1.5 text-xs font-semibold
@@ -169,6 +161,14 @@ const projects: Project[] = [
                   {project.status[lang]}
                 </span>
               )}
+              <span
+                class="text-xs font-bold uppercase tracking-widest
+                       px-2.5 py-1 rounded-full"
+                style={`background: rgba(0,0,0,0.4); color: ${project.accent};
+                        border: 1px solid ${project.accent}40`}
+              >
+                {project.category[lang]}
+              </span>
             </div>
           </div>
 
@@ -212,7 +212,8 @@ const projects: Project[] = [
               ))}
             </div>
 
-            <!-- CTAs: sitio publicado y/o repositorio -->
+            <!-- CTAs: sitio publicado y/o repositorio (Hidroponía aún no tiene web propia) -->
+            {(project.site || project.repo) && (
             <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1">
             {project.site && (
             <a
@@ -269,6 +270,7 @@ const projects: Project[] = [
             </a>
             )}
             </div>
+            )}
 
           </div>
         </article>

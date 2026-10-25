@@ -29,8 +29,6 @@ export const ui = {
     'hero.photoAlt': 'Nestor Hernández Díaz, estudiante de Ingeniería de Sistemas e Informática',
     'hero.chipEduLabel': 'Formación',
     'hero.chipEdu': 'Ing. de Sistemas e Informática',
-    'hero.chipNowLabel': 'Ahora',
-    'hero.chipNow': 'Prácticas en Grupo Cobys',
 
     'about.eyebrow': 'Sobre mí',
     'about.title': 'Expertise & Stack Tecnológico',
@@ -84,8 +82,6 @@ export const ui = {
     'hero.photoAlt': 'Nestor Hernández Díaz, Systems and Computer Engineering student',
     'hero.chipEduLabel': 'Education',
     'hero.chipEdu': 'Systems and Computer Engineering',
-    'hero.chipNowLabel': 'Now',
-    'hero.chipNow': 'Intern at Grupo Cobys',
 
     'about.eyebrow': 'About me',
     'about.title': 'Expertise & Tech Stack',
