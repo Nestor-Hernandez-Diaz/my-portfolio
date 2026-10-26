@@ -43,11 +43,10 @@ const projects: Project[] = [
     title: 'Fisibot',
     subtitle: { es: 'Asistente virtual de la FISI-UNSM', en: 'FISI-UNSM virtual assistant' },
     description: {
-      es: 'Asistente con avatar 3D que responde por texto y voz consultas sobre admisión, carreras, trámites y ubicaciones del campus. Las respuestas salen de documentos oficiales mediante RAG (búsqueda híbrida y modelo de lenguaje) y citan su fuente. Desplegado y en uso.',
-      en: 'Assistant with a 3D avatar that answers, by text and voice, questions about admissions, degree programs, procedures and campus locations. Answers come from official documents through RAG (hybrid search and a language model) and cite their source. Deployed and in use.',
+      es: 'Asistente con avatar 3D que responde por texto y voz consultas sobre admisión, carreras, trámites y ubicaciones del campus. Las respuestas salen de documentos oficiales mediante RAG (búsqueda híbrida y modelo de lenguaje) y citan su fuente.',
+      en: 'Assistant with a 3D avatar that answers, by text and voice, questions about admissions, degree programs, procedures and campus locations. Answers come from official documents through RAG (hybrid search and a language model) and cite their source.',
     },
     tags: ['Node.js', 'Vite', 'Three.js', 'RAG', 'Gemini', 'Vercel', 'Cloudflare Tunnel'],
-    site: 'https://fisibot.me',
     accent: '#2563EB',
     bgFrom: '#0f172a',
     bgTo: '#1e3a5f',
@@ -212,7 +211,7 @@ const projects: Project[] = [
               ))}
             </div>
 
-            <!-- CTAs: sitio publicado y/o repositorio (Hidroponía aún no tiene web propia) -->
+            <!-- CTAs: sitio publicado y/o repositorio (Hidroponía y Fisibot aún no tienen enlace público) -->
             {(project.site || project.repo) && (
             <div class="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1">
             {project.site && (
